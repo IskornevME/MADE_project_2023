@@ -12,4 +12,5 @@
 1. [Transformers Doc](https://huggingface.co/docs/transformers/performance)
 2. [Введение в Transformers и Hugging Face](https://habr.com/ru/articles/704592/)
 3. [Оценка выпускного проекта](https://data.vk.company/blog/topic/view/21655/)
+4. [Тюнинг GPT-like моделей](https://habr.com/ru/companies/neoflex/articles/722584/)
 
