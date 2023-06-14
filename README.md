@@ -8,14 +8,24 @@
 ## Параметры генерации фейкового документа
 Использовалась модель `sberbank-ai/rugpt3medium_based_on_gpt2`
 
-В ноутбуке рассмотреные некоторые параметры генерации текста с подсчетом метрик на части датасета `MS MARCO`.
+В ноутбуке рассмотреные некоторые параметры генерации текста с подсчетом метрик на части реальных данных.
 
 Для подстеча метрик была использована библиотека [ranking_metrics](https://pypi.org/project/docs-ranking-metrics/)
 
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/10VueXxB-o6Nj5ccgcDidmIGvV4HtffZV)
 
-  
+## Оптимальные параметры генерации
+```
+max_length=40, early_stopping=True, do_sample=True, num_beams=1, temperature=0.9, top_k=100, top_p=0.9, no_repeat_ngram_size=3
+```
+
+Это дало увелиение значения метрик при модели ранжирования `LaBSE`
+|metric|default|optimal|increase|
+|---|---|---|---|
+|FDARO@1|0.16|0.75|369%|
+|FDARO@2|0.65|0.99|52%|
+
 ## Полезные ссылки
 
 1. [Transformers Doc](https://huggingface.co/docs/transformers/performance)
