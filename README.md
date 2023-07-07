@@ -14,3 +14,26 @@
 3. [Оценка выпускного проекта](https://data.vk.company/blog/topic/view/21655/)
 4. [Тюнинг GPT-like моделей](https://habr.com/ru/companies/neoflex/articles/722584/)
 
+**Инструкция по запуску:**
+1. Склонировать репозиторий и установить зависимости.
+2. Перейти в папку `/scripts` и запустить генерацию текстов:
+~~~
+python gen_text_rugpt.py -i test_samples_4.json -m train -o experiment_0_rugpt_data_for_metrics_4_samples.json -n rugpt
+~~~
+3. Далее запускаем команду, чтобы преобразовать данные в нужный формат для модели ранжирования:
+~~~
+python get_data_for_ranker.py -i experiment_0_rugpt_data_for_metrics_4_samples.json -o experiment_0_rugpt_4_samples.tsv
+~~~
+4. Запускаем ранжировщик:
+~~~
+cat experiment_0_rugpt_4_samples.tsv | cut -f2,4 | PYTHONPATH="$PYTHONPATH:/mnt/DATA/n.ermolaev/made/ranking-pipeline" python
+ -m inferencer.inference --model inferencer/models/web/xlm_roberta_large_assessor_body_q40_b440 --gpus 4 --bs 64
+ --model_data_path /mnt/DATA/n.ermolaev/made/models/xlm_roberta_large_assessor_body_q40_b440 --no_half > experiment_0_scores_m3_rugpt.txt
+~~~
+5. Считаем метрики:
+~~~
+python count_metric_script.py -i experiment_0_rugpt_data_for_metrics_4_samples.json -s experiment_0_scores_m3_rugpt.txt -o metrics_rugpt.json
+~~~
+
+
+
